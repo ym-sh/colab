@@ -4,7 +4,7 @@ import cv2
 # https://github.com/opencv/blob/master/data/haarcascades/
 # https://github.com/opencv/opencv_contrib/blob/master/modules/face/data/cascades/
 
-cascade_path = "opencv/opencv/data/haarcascades/haarcascade_frontface_default.xml"
+cascade_path = "D:\opencv\opencv\data\haarcascades\haarcascade_frontalface_default.xml"
 
 # 他のモデルファイル(参考)
 #cascade_path = "opencv/opencv/data/haarcascades/haarcascade_frontface_alt.xml"
@@ -19,14 +19,16 @@ input_path = "input/" + input_file
 output_path = "output/" + input_file
 
 # ディレクトリ確認用(うまく行かなかった時用)
-#import os
-#print(os.path.exists(image_path))
+import os
+print(os.path.exists(input_path))
 
 # ファイルの読み込み
 image = cv2.imread(input_path)
+cv2.imwrite(output_path, image)
 
 # グレースケール変換
 image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+cv2.imwrite(output_path, image_gray)
 
 # カスケード分類器の特徴量を取得する
 cascade = cv2.CascadeClassifier(cascade_path)
@@ -47,6 +49,6 @@ color = (255, 255, 255) #白
 if len(facerect) > 0:
   # 検出した顔を含む矩型の作成
   for rect in facerect:
-    cv2.rectanglle(image, tuple(rect[0:2]), tuple(rect[0:2]+rect[2:4]), color, thinckness=2)
+    cv2.rectangle(image, tuple(rect[0:2]), tuple(rect[0:2]+rect[2:4]), color, thickness=2)
   # 認識結果の保存
   cv2.imwrite(output_path, image)
